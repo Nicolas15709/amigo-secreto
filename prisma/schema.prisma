@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -13,52 +7,39 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
-// =============================================
-// 1. Jugadores del quiz
-// =============================================
 model Player {
-  id           Int      @id @default(autoincrement())
-  name         String   @unique               // Nombre que pone al entrar
-  correctAnswers Int    @default(0)           // cuántas acertó
-  totalQuestions Int    @default(0)           // cuántas respondió (para %)
-  finished     Boolean  @default(false)       // terminó el quiz?
-  finishedAt   DateTime?                      // cuando terminó
-  createdAt    DateTime @default(now())
-
-  answers      Answer[]
+  id             Int       @id @default(autoincrement())
+  name           String    @unique
+  correctAnswers Int       @default(0)
+  totalQuestions Int       @default(0)
+  finished       Boolean   @default(false)
+  finishedAt     DateTime?
+  createdAt      DateTime  @default(now())
+  answers        Answer[]
 
   @@map("players")
 }
 
-// =============================================
-// 2. Preguntas sobre tu amigo secreto
-// =============================================
 model Question {
-  id       Int      @id @default(autoincrement())
-  text     String
-  options  String[]                     // ["Rojo", "Azul", "Verde", "Amarillo"]
-  correct  String                       // "Azul"
-  order    Int      @default(0)         // para que salgan siempre en el mismo orden
-
-  answers  Answer[]
+  id      Int      @id @default(autoincrement())
+  text    String
+  options String[]
+  correct String
+  order   Int      @default(0)
+  answers Answer[]
 
   @@map("questions")
 }
 
-// =============================================
-// 3. Respuestas individuales
-// =============================================
 model Answer {
-  id          Int      @id @default(autoincrement())
-  playerId    Int
-  questionId  Int
-  selected    String
-  isCorrect   Boolean
-  answeredAt  DateTime @default(now())
-
-  player      Player    @relation(fields: [playerId], references: [id])
-  question    Question  @relation(fields: [questionId], references: [id])
+  id         Int      @id @default(autoincrement())
+  playerId   Int
+  questionId Int
+  selected   String
+  isCorrect  Boolean
+  answeredAt DateTime @default(now())
+  player     Player   @relation(fields: [playerId], references: [id])
+  question   Question @relation(fields: [questionId], references: [id])
 
   @@unique([playerId, questionId])
   @@map("answers")
