@@ -1,2 +1,44 @@
-###
-POST http://localhost:3000/api/finish/player/8
+### 📌 Crear jugador
+POST http://localhost:3000/api/player
+Content-Type: application/json
+
+{
+  "name": "NicoTestsdscs3"
+}
+
+### 📌 Obtener preguntas
+GET http://localhost:3000/api/questions
+
+
+### 📌 Registrar respuesta (cambia playerId y questionId según tu BD)
+POST http://localhost:3000/api/answer
+Content-Type: application/json
+
+{
+  "playerId": 1,
+  "questionId": 1,
+  "selected": "Playa",
+  "isCorrect": true
+}
+
+### 📌 Registrar respuesta incorrecta (opcional)
+POST http://localhost:3000/api/answer
+Content-Type: application/json
+
+{
+  "playerId": 1,
+  "questionId": 2,
+  "selected": "Sushi",
+  "isCorrect": false
+}
+
+### 📌 Finalizar quiz para un jugador (si tienes la ruta /finish)
+POST http://localhost:3000/api/finish/1
+Content-Type: application/json
+
+{}
+
+
+### 📌 Obtener leaderboard (si tienes esta ruta)
+GET http://localhost:3000/api/leaderboard
+
