@@ -1,36 +1,52 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { Prisma } from "@prisma/client";
 
 export async function POST(req: Request) {
   try {
     const { playerId, questionId, selected, isCorrect } = await req.json();
 
-    if (!playerId || !questionId || !selected) {
+    const result = await prisma.$transaction(async (tx) => {
+      // 1️⃣ Crear respuesta
+      const answer = await tx.answer.create({
+        data: {
+          playerId,
+          questionId,
+          selected,
+          isCorrect,
+        },
+      });
+
+      // 2️⃣ Actualizar stats SOLO si la respuesta se creó
+      await tx.player.update({
+        where: { id: playerId },
+        data: {
+          totalQuestions: { increment: 1 },
+          correctAnswers: isCorrect ? { increment: 1 } : undefined,
+        },
+      });
+
+      return answer;
+    });
+
+    return NextResponse.json({ ok: true, answer: result });
+
+  } catch (error) {
+    // 🟡 Respuesta duplicada
+    if (
+      error instanceof Prisma.PrismaClientKnownRequestError &&
+      error.code === "P2002"
+    ) {
       return NextResponse.json(
-        { error: "Datos incompletos" },
-        { status: 400 }
+        { error: "Pregunta ya respondida" },
+        { status: 409 }
       );
     }
 
-    const answer = await prisma.answer.upsert({
-      where: { playerId_questionId: { playerId, questionId } },
-      update: { selected, isCorrect },
-      create: { playerId, questionId, selected, isCorrect },
-    });
+    console.error("ERROR ANSWER:", error);
 
-    await prisma.player.update({
-      where: { id: playerId },
-      data: {
-        totalQuestions: { increment: 1 },
-        correctAnswers: isCorrect ? { increment: 1 } : undefined,
-      },
-    });
-
-    return NextResponse.json(answer);
-  } catch (error) {
-    console.error("Error guardando respuesta:", error);
     return NextResponse.json(
-      { error: "No se pudo registrar la respuesta" },
+      { error: "Error interno al registrar respuesta" },
       { status: 500 }
     );
   }
