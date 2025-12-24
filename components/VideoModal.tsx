@@ -65,12 +65,12 @@ export default function VideoModal({ onContinue }: Props) {
         <div className="w-full max-w-[92vw] sm:max-w-3xl md:max-w-4xl lg:max-w-5xl aspect-video rounded-2xl overflow-hidden bg-black shadow-2xl">
           <video
             ref={videoRef}
-            src="/intro.mp4"
+            src="/intro-mobile.mp4"
             playsInline
             muted={isMuted}
-            preload="metadata"
+            preload="auto"
             controls={false}
-            onLoadedData={handleVideoLoaded}
+            onCanPlay={() => setIsLoading(false)}
             onError={handleVideoError}
             onEnded={onContinue}
             className={`w-full h-full object-contain transition-opacity duration-500 ${
