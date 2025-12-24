@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 
 type Props = {
   onContinue: () => void;
@@ -13,6 +13,20 @@ export default function VideoModal({ onContinue }: Props) {
   const [hasStarted, setHasStarted] = useState(false);
   const [videoError, setVideoError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    // RESET TOTAL DEL VIDEO (clave para iOS)
+    video.pause();
+    video.currentTime = 0;
+    video.load();
+
+    setIsLoading(true);
+    setHasStarted(false);
+    setVideoError(false);
+  }, []);
 
   const handlePlay = async () => {
     if (!videoRef.current) return;

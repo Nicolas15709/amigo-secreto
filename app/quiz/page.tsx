@@ -269,11 +269,14 @@ export default function QuizPage() {
             }
           `}
         >
-          <QuestionCard 
-            question={currentQuestion} 
+          <QuestionCard
+            question={currentQuestion}
+            questionNumber={currentIndex + 1}
+            totalQuestions={questions.length}
             onAnswer={handleAnswer}
             isTransitioning={isTransitioning}
           />
+
         </div>
       </div>
 

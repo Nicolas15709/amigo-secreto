@@ -10,11 +10,14 @@ type Question = {
 
 type Props = {
   question: Question;
-  onAnswer: (answer: string) => void;
-  isTransitioning?: boolean;
+  questionNumber: number;
+  totalQuestions: number;
+  onAnswer: (value: string) => void;
+  isTransitioning: boolean;
 };
 
-export default function QuestionCard({ question, onAnswer, isTransitioning }: Props) {
+
+export default function QuestionCard({ question, questionNumber, totalQuestions, onAnswer, isTransitioning }: Props) {
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [particles, setParticles] = useState<Array<{ id: number; x: number; y: number }>>([]);
   const [confetti, setConfetti] = useState<Array<{ id: number; x: number; y: number; color: string; rotation: number }>>([]);
@@ -166,15 +169,15 @@ export default function QuestionCard({ question, onAnswer, isTransitioning }: Pr
           ))}
         </div>
 
-        {/* Indicador mejorado */}
+       {/* Indicador mejorado */}
         <div className="pb-6 text-center relative z-10">
           <div className="inline-flex items-center gap-3 px-6 py-2 rounded-full bg-gradient-to-r from-purple-500/20 to-pink-500/20 backdrop-blur-sm animate-pulse-glow">
             <span className="text-xl animate-spin-slow">⭐</span>
-            <span className="text-sm font-bold text-gray-700">Pregunta {question.id}</span>
+            <span className="text-sm font-bold text-gray-700">Pregunta {questionNumber}</span>
             <span className="text-xl animate-spin-slow" style={{ animationDelay: "1s" }}>⭐</span>
           </div>
         </div>
-      </div>
+
 
       <style jsx>{`
         .glass-card {
@@ -436,6 +439,7 @@ export default function QuestionCard({ question, onAnswer, isTransitioning }: Pr
           }
         }
       `}</style>
+      </div>
     </div>
   );
 }
