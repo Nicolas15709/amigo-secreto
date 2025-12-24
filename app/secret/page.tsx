@@ -99,7 +99,7 @@ export default function Secret() {
               </h2>
 
               <p className="text-gray-600 mt-4 text-center text-sm sm:text-base">
-                ¡Feliz Navidad! Espero que hayan disfrutado del Quiz.
+                ¡Feliz Navidad! Espero que hayan disfrutado del Quiz😊.
               </p>
             </div>
           </div>

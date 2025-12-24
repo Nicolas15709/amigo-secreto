@@ -3,6 +3,9 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 async function main() {
+  console.log("Borrando respuestas anteriores…");
+  await prisma.answer.deleteMany();
+  
   console.log("Borrando preguntas anteriores…");
   await prisma.question.deleteMany();
 
@@ -11,75 +14,75 @@ async function main() {
   await prisma.question.createMany({
     data: [
       {
-        text: "¿Crees que esta persona prefiere playa o montaña para descansar?",
-        options: ["Playa", "Montaña", "Ciudad", "Camping"],
-        correct: "Playa",
+        text: "¿Qué actividad disfruta más para despejar la mente?",
+        options: ["🏃‍♂️ Running", "🛋️ Ver series", "🎮 Jugar videojuegos", "🍻 Salir a tomar algo"],
+        correct: "🏃‍♂️ Running",
         order: 1,
       },
       {
-        text: "¿Qué comida sospechás que le vuelve loco?",
-        options: ["Pizza", "Sushi", "Asado", "Hamburguesa"],
-        correct: "Asado",
+        text: "¿Cómo suele verse cuando sale de trabajar?",
+        options: ["👔 Formal y bien arreglado", "😎 Casual pero elegante", "🧢 Deportivo", "👕 Muy relajado"],
+        correct: "👔 Formal y bien arreglado",
         order: 2,
       },
       {
-        text: "¿Le gusta más bailar reggaetón o rock?",
-        options: ["Reggaetón", "Rock", "Salsa", "Ninguno"],
-        correct: "Rock",
+        text: "¿En qué tipo de lugar pasa la mayor parte de su semana?",
+        options: ["🏦 En un banco", "🏫 En una universidad", "🏠 Trabajando desde casa", "🏢 En una startup"],
+        correct: "🏦 En un banco",
         order: 3,
       },
       {
-        text: "¿Qué película creés que ve de memoria?",
-        options: ["El Padrino", "Avengers", "Forrest Gump", "Harry Potter"],
-        correct: "Forrest Gump",
+        text: "¿Qué parte de su rutina cuida más últimamente?",
+        options: ["💪 Entrenar en el gym", "🏃‍♂️ Correr con constancia", "🥗 Comer saludable", "😴 Dormir temprano"],
+        correct: "💪 Entrenar en el gym",
         order: 4,
       },
       {
-        text: "¿Animal de compañía que tendría?",
-        options: ["Perro", "Gato", "Pez", "Ninguno"],
-        correct: "Perro",
+        text: "Los fines de semana casi siempre los pasa…",
+        options: ["👩‍❤️‍👨 Con su novia", "👨‍👩‍👧‍👦 Con su familia", "🎉 Con amigos", "🏖️ Viajando"],
+        correct: "👩‍❤️‍👨 Con su novia",
         order: 5,
       },
       {
-        text: "¿Qué cree que es el mejor superhéroe?",
-        options: ["Batman", "Spiderman", "Iron Man", "Superman"],
-        correct: "Batman",
+        text: "Si tiene un rato libre un domingo, lo más probable es que…",
+        options: ["🏃‍♂️ Salga a correr", "☕ Vaya por un café", "🎬 Vea una película", "🛌 Se quede descansando"],
+        correct: "🏃‍♂️ Salga a correr",
         order: 6,
       },
       {
-        text: "¿A qué hora sospechás que se levanta los domingos?",
-        options: ["Antes de 10", "Entre 10 y 12", "Después de 12", "No duerme"],
-        correct: "Antes de 10",
+        text: "¿Qué rasgo físico se le nota más a simple vista?",
+        options: ["🧔 Barba", "🧔‍♂️ Cabello", "🧍‍♂️ Estatura", "😎 Su forma de vestir"],
+        correct: "🧔 Barba",
         order: 7,
       },
       {
-        text: "¿Qué le regalarías por su cumple?",
-        options: ["Ropa", "Libro", "Videojuego", "Algo para cocinar"],
-        correct: "Videojuego",
+        text: "¿Qué lo motiva más a entrenar?",
+        options: ["🧠 Salud y bienestar", "💪 Verse más grande", "🏆 Competir", "📸 Redes sociales"],
+        correct: "🧠 Salud y bienestar",
         order: 8,
       },
       {
-        text: "¿Bebida típica en su heladera?",
-        options: ["Cerveza", "Coca Cola", "Fernet", "Agua"],
-        correct: "Cerveza",
+        text: "En una reunión social, él suele ser…",
+        options: ["😄 Conversón", "🤐 Muy reservado", "🎤 El alma de la fiesta", "📱 Siempre en el celular"],
+        correct: "😄 Conversón",
         order: 9,
       },
       {
-        text: "¿Color que más usa en su ropa?",
-        options: ["Negro", "Azul", "Verde", "Blanco"],
-        correct: "Negro",
+        text: "¿Qué tipo de plan prefiere con su novia?",
+        options: ["🍽️ Salir a comer", "🏃‍♂️ Actividades al aire libre", "🎬 Ver películas", "✈️ Viajar"],
+        correct: "🍽️ Salir a comer",
         order: 10,
       },
       {
-        text: "¿Qué le gusta hacer cuando está solo/a?",
-        options: ["Ver series", "Salir con amigos", "Leer", "Cocinar"],
-        correct: "Ver series",
+        text: "¿Qué superhéroe cree que es el mejor?",
+        options: ["🦇 Batman", "🕷️ Spiderman", "🦸‍♂️ Superman", "🛡️ Capitán América"],
+        correct: "🦸‍♂️ Superman",
         order: 11,
       },
       {
-        text: "¿Piensa que el amor entra por los ojos o por el corazón?",
-        options: ["Ojos", "Corazón", "Ambos", "Ninguno"],
-        correct: "Corazón",
+        text: "¿En qué momento es más probable que se ponga a cantar?",
+        options: ["🚗 Cuando va manejando solo", "🚿 Mientras se baña", "🎧 Cuando escucha música con audífonos", "🎉 Solo en reuniones con amigos"],
+        correct: "🚗 Cuando va manejando solo",
         order: 12,
       },
     ],
