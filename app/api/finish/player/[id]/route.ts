@@ -3,9 +3,9 @@ import { prisma } from "@/lib/prisma";
 
 export async function POST(
   req: Request,
-  { params }: { params: Promise<{ id: string }> }  // ← Promise aquí
+  { params }: { params: Promise<{ id: string }> }
 ) {
-  const resolvedParams = await params;  // ← Await aquí
+  const resolvedParams = await params;
   const rawId = resolvedParams.id;
 
   console.log("PARAMS RECIBIDOS:", resolvedParams);
