@@ -1,14 +1,13 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 
 export async function POST(
-  req: Request,
+  req: NextRequest,
   context: { params: Promise<{ id: string }> }
 ) {
-  const params = await context.params;
-  const rawId = params.id;
+  const { id: rawId } = await context.params;
 
-  console.log("PARAMS RECIBIDOS:", params);
+  console.log("PARAMS RECIBIDOS:", rawId);
 
   if (!rawId || isNaN(Number(rawId))) {
     return NextResponse.json({ error: "playerId inválido" }, { status: 400 });
